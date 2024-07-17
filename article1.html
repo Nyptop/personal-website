@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning about Spark Internals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Learning about Spark Internals</h1>
+        <p>Recently, I’ve been learning about how Spark works internally, which led me to the PhD dissertation of Matei Zaharia, about Resilient Distributed Datasets: <a href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2014/EECS-2014-12.pdf">https://www2.eecs.berkeley.edu/Pubs/TechRpts/2014/EECS-2014-12.pdf</a></p>
+        <p>This feels like a key insight into his mental model:</p>
+        <blockquote>
+            “The insight behind RDDs is that although the workloads that MapReduce was unsuited for (e.g., iterative, interactive and streaming queries) seem at first very different, they all require a common feature that MapReduce lacks: efficient data sharing across parallel computation stages.”
+        </blockquote>
+        <p>RDDs keep data in RAM between computation steps. This is in contrast to MapReduce keeping intermediate data on disk.</p>
+        <p>For an iterative algorithm, made of hundreds of computation steps, this can save a lot of I/O. Similarly, Interactive workloads require many reads (lots of exploratory queries), while streaming workloads require many writes (constantly adding new data), so keeping data in memory can be very helpful here too.</p>
+        <p>Before Spark, there were specialised alternatives to MapReduce for iterative, interactive and streaming workloads, like HaLoop, Apache Impala and Apache Storm respectively. A lot of Spark's success is in the fact it is a single solution to all these cases.</p>
+        <p><a href="index.html">Back to Homepage</a></p>
+    </div>
+</body>
+</html>
