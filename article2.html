@@ -7,77 +7,93 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
             line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
         }
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
         h1 {
             text-align: center;
+            color: #0056b3;
         }
-        a {
-            text-decoration: none;
-            color: #007BFF;
+        p {
+            margin: 10px 0;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-left: 5px solid #ccc;
+            overflow-x: auto;
+            border-radius: 5px;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1em;
         }
     </style>
 </head>
 <body>
-    <h1>Mini-essay on the similarities between Unix and MapReduce</h1>
-    <p>In ‘Designing Data-Intensive Applications’ by Martin Kleppmann, he explains MapReduce by showing how similar it is to Unix’s approach to data processing. It’s a nice way to explain MapReduce since so many developers are familiar with Unix.</p>
-    <p>A key similarity is that Unix and MapReduce both have a philosophy of simple and composable functions. For example, the two frameworks take a similar approach when given the task of counting the occurrences of words in a document.</p>
-    <p>This is how Unix does it:</p>
-    <pre>
-        <code>
+    <div class="container">
+        <h1>Mini-essay on the similarities between Unix and MapReduce</h1>
+        <p>In ‘Designing Data-Intensive Applications’ by Martin Kleppmann, he explains MapReduce by showing how similar it is to Unix’s approach to data processing. It’s a nice way to explain MapReduce since so many developers are familiar with Unix.</p>
+        <p>A key similarity is that Unix and MapReduce both have a philosophy of simple and composable functions. For example, the two frameworks take a similar approach when given the task of counting the occurrences of words in a document.</p>
+        <p>This is how Unix does it:</p>
+        <pre>
+            <code>
 cat input.txt | tr -cs '[:alpha:]' '[\n*]' | sort | uniq -c | sort -nr
-        </code>
-    </pre>
-    <p>And these are the functions used by MapReduce to achieve the same thing:</p>
-    <pre>
-        <code>
+            </code>
+        </pre>
+        <p>And these are the functions used by MapReduce to achieve the same thing:</p>
+        <pre>
+            <code>
 def map_function(document):
     for word in document.split():
         yield (word.lower(), 1)
 
 def reduce_function(word, counts):
     yield (word, sum(counts))
-        </code>
-    </pre>
-    <p>In Unix, you would first use <code>tr -cs '[:alpha:]' '[\n*]'</code> to split the input into lines of unique words. For an input document looking like this:</p>
-    <pre>
-        <code>
+            </code>
+        </pre>
+        <p>In Unix, you would first use <code>tr -cs '[:alpha:]' '[\n*]'</code> to split the input into lines of unique words. For an input document looking like this:</p>
+        <pre>
+            <code>
 look at this sentence
-        </code>
-    </pre>
-    <p>The output would be:</p>
-    <pre>
-        <code>
+            </code>
+        </pre>
+        <p>The output would be:</p>
+        <pre>
+            <code>
 look
 at
 this
 sentence
-        </code>
-    </pre>
-    <p>This achieves something similar to the map stage of MapReduce, which produces a long list of lines that look like this <code>{example_word:1}</code> (where 1 is the count) from an input text document.</p>
-    <p>After a map stage, these lines are grouped together by key; something similar can be achieved in Unix by using the <code>sort</code> command, putting the lines in alphabetical order (although the lines do not include the count and simply look like <code>example_word</code>, so Unix is not exactly the same as MapReduce!).</p>
-    <p>In Unix, the next stage would be to collapse identical adjacent lines and count their occurrences, which is achieved by the <code>uniq</code> command. This is akin to reduce in MapReduce, which combines all the lines with the same key into one key, where the values have been summed. For example, if your data looked like this after the map stage:</p>
-    <pre>
-        <code>
+            </code>
+        </pre>
+        <p>This achieves something similar to the map stage of MapReduce, which produces a long list of lines that look like this <code>{example_word:1}</code> (where 1 is the count) from an input text document.</p>
+        <p>After a map stage, these lines are grouped together by key; something similar can be achieved in Unix by using the <code>sort</code> command, putting the lines in alphabetical order (although the lines do not include the count and simply look like <code>example_word</code>, so Unix is not exactly the same as MapReduce!).</p>
+        <p>In Unix, the next stage would be to collapse identical adjacent lines and count their occurrences, which is achieved by the <code>uniq</code> command. This is akin to reduce in MapReduce, which combines all the lines with the same key into one key, where the values have been summed. For example, if your data looked like this after the map stage:</p>
+        <pre>
+            <code>
 {example_word:1}
 {example_word:1}
-        </code>
-    </pre>
-    <p>It would look like this after the reduce stage:</p>
-    <pre>
-        <code>
+            </code>
+        </pre>
+        <p>It would look like this after the reduce stage:</p>
+        <pre>
+            <code>
 {example_word:2}
-        </code>
-    </pre>
-    <p>Kleppman makes the point that it is remarkable how well these Unix commands can perform, for something written so long ago. However, the key difference between Unix and MapReduce (and the reason we need MapReduce) is that Unix is built to run on a single computer, whereas MapReduce is built to run across many.</p>
+            </code>
+        </pre>
+        <p>Kleppman makes the point that it is remarkable how well these Unix commands can perform, for something written so long ago. However, the key difference between Unix and MapReduce (and the reason we need MapReduce) is that Unix is built to run on a single computer, whereas MapReduce is built to run across many.</p>
+    </div>
 </body>
 </html>
