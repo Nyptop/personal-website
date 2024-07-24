@@ -10,7 +10,7 @@
     <header>
         <h1>How Unix processes data differently to Python</h1>
     </header>
-    <article>
+    <div class="container">
         <p>If you had log files from a website which looked like this:</p>
         <pre>
 216.58.210.78 - - [27/Feb/2015:17:55:11 +0000] "GET /css/typography.css HTTP/1.1" 200 3377 "http://neil-gibbons.uk/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36"
@@ -42,6 +42,6 @@ head -n 5
         </pre>
         <p>A key difference between these two approaches is in how they use memory. The python script builds a hash table of URLs and their count in memory. Meanwhile the Unix command relies on sorting the list of URLs alphabetically, then uses uniq to filter out repeated lines, keeping a count thanks to the -c flag (an approach very similar to MapReduce (https://neil-gibbons.uk/article2.html)). Here, chunks of data are sorted in memory, written to disk as segment files, then multiple sorted segments are combined to create the larger sorted file.</p>
         <p>Which approach is better? If you have a small to medium-sized website and the number of distinct URLs can easily fit in memory, you may prefer the python script for its simplicity and readability. However, for very large websites with many distinct URLs, the OS would start to rely on virtual memory to store the hash table, resulting in lots of inefficient disk I/O, dramatically slowing performance. In this case, the Unix approach may be preferred because its sort function handles spilling to disk so efficiently.</p>
-    </article>
+    </div>
 </body>
 </html>
