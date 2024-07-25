@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short Article on Reduce Side Joins in MapReduce</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Short Article on Reduce Side Joins in MapReduce</h1>
+        <p>A typical example of a join in a batch processing job in a framework like MapReduce is needing to combine user activity events with a user database.</p>
+        <p>If we had user activity data looking like this:</p>
+        <pre>
+User 105 clicked button … to load URL …
+User 296 viewed the profile of user 134
+User 251 logged out from browser session…
+        </pre>
+        <p>And a user database like this:</p>
+        <pre>
+User_id    email                           date_of_birth
+105        hello@email.com                 01/01/50
+134        helloagain@email.com            23/4/83
+251        anotheruser@website.com         22/2/93
+296        onemore@website.com             12/5/02
+        </pre>
+        <p>We might need to join the data as part of a batch processing job to understand which websites are most popular with which age groups. We need the activity log data to determine which websites users visited and we need the user database to determine user ages.</p>
+        <p>The simplest way to implement the necessary join would be to query a database on a remote server for every activity record. This would be very slow because of the round-trip time for each request to the server and the potential to overwhelm the database with many parallel queries. Plus, the data on the database could change while the request is running, making the result non-deterministic.</p>
+        <p>A better approach would be to put a copy of the user database on the same distributed file system as the log of user activity events. To perform the join in the MapReduce framework, one set of mappers could extract the user ID (key) and activity event (value) from the user activity data, and another set of mappers could go over the user database to extract the user ID (key) and date of birth (value).</p>
+        <p>When MapReduce then sorts the keys, all activity events and dates of birth with the same user ID are adjacent. This means the reducer can easily and efficiently apply the join logic to produce output looking like this <code>{url: …, date_of_birth: 01/01/50}</code>. From this point, we could easily chain another MapReduce job to determine the count of each URL for each age group.</p>
+    </div>
+</body>
+</html>
