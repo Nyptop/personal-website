@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Search Indexes in MapReduce</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Building Search Indexes in MapReduce</h1>
+        <p>The MapReduce algorithm helps to explain a lot of the early success of Google as it was used to build their search index.</p>
+        <p>Essentially, a search index is a file where you can efficiently look up a keyword, then there is a list of all documents containing that keyword.</p>
+        <p>Imagine you have these four pages on the internet:</p>
+        <pre>
+1: "Guide to Paris"
+URL: www.expedia.com/paris-guide
+Text: "Paris is known for its art, culture, and cuisine."
+
+2: "Python Programming Basics"
+URL: www.codingwebsite.com/python-basics
+Text: "Python is a versatile programming language used in web development, data science."
+
+3: "Top 10 Movie Reviews"
+URL: www.moviereviews.com/top-10
+Text: "Check out our top 10 movie reviews of the year, covering a variety of genres. Check the programming schedule of your favourite films at the cinema."
+
+4: "Home Gardening Tips"
+URL: www.gardeningwebsite.com/home-tips
+Text: "Home gardening can be both relaxing and rewarding. Learn about plant care and soil types. Use plants in cuisine."
+        </pre>
+        <p>A resulting search index from the MapReduce process could look like this:</p>
+        <pre>
+Keyword    URLs
+Paris      www.expedia.com/paris-guide
+art        www.expedia.com/paris-guide
+cuisine    www.expedia.com/paris-guide, www.gardeningwebsite.com/home-tips
+Python     www.codingwebsite.com/python-basics
+programming www.codingwebsite.com/python-basics, www.moviereviews.com/top-10
+movie      www.moviereviews.com/top-10
+reviews    www.moviereviews.com/top-10
+gardening  www.gardeningwebsite.com/home-tips
+home       www.gardeningwebsite.com/home-tips
+        </pre>
+        <p>Note how words, like ‘cuisine’ and ‘programming’ in this example, can point at multiple URLs.</p>
+        <p>MapReduce is very good at building search indexes for full-text search over a fixed number of documents. In the map phase, each node can process its assigned documents, extracting keywords and their locations. In the reduce phase, the results from all nodes are combined to build the final index, which maps each keyword to the list of websites containing it. Such an approach supports parallelism well. You want this for full-text search because you’ll be processing a lot of text data. Having a fixed number of documents is helpful because it means you avoid the complexity of handling continuous updates and changes.</p>
+    </div>
+</body>
+</html>
