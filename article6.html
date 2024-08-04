@@ -42,7 +42,7 @@ reviews    www.moviereviews.com/top-10
 gardening  www.gardeningwebsite.com/home-tips
 home       www.gardeningwebsite.com/home-tips
         </pre>
-        <p>Note how words, like ‘cuisine’ and ‘programming’ in this example, can point at multiple URLs.</p>
+        <p>Note how keys, like ‘cuisine’ and ‘programming’ in this example, can point at multiple URLs. The key acts as the word you put in the Google search box, then the associated values (list of URLs) are the search results.</p>
         <p>MapReduce is very good at building search indexes for full-text search over a fixed number of documents. In the map phase, each node can process its assigned documents, extracting keywords and their locations. In the reduce phase, the results from all nodes are combined to build the final index, which maps each keyword to the list of websites containing it. Such an approach supports parallelism well. You want this for full-text search because you’ll be processing a lot of text data. Having a fixed number of documents is helpful because it means you avoid the complexity of handling continuous updates and changes.</p>
     </div>
 </body>
