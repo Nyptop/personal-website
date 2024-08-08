@@ -8,9 +8,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>Learning about Spark Internals</h1>
-        <p>Recently, I’ve been learning about how Spark works internally, which led me to the PhD dissertation of Matei Zaharia, about Resilient Distributed Datasets: <a href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2014/EECS-2014-12.pdf">https://www2.eecs.berkeley.edu/Pubs/TechRpts/2014/EECS-2014-12.pdf</a></p>
-        <p>This feels like a key insight into his mental model:</p>
+        <h1>What is unique about Spark?</h1>
+        <p>Recently, I’ve been learning a bit about how Spark works internally, which led me to the PhD dissertation of Matei Zaharia, about Resilient Distributed Datasets: <a href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2014/EECS-2014-12.pdf">https://www2.eecs.berkeley.edu/Pubs/TechRpts/2014/EECS-2014-12.pdf</a></p>
+        <p>This feels like a key insight:</p>
         <blockquote>
             “The insight behind RDDs is that although the workloads that MapReduce was unsuited for (e.g., iterative, interactive and streaming queries) seem at first very different, they all require a common feature that MapReduce lacks: efficient data sharing across parallel computation stages.”
         </blockquote>
