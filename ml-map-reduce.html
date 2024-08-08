@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using MapReduce for Machine Learning Systems</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Using MapReduce for Machine Learning Systems</h1>
+        <p>In the last article (<a href="https://neil-gibbons.uk/article6.html">https://neil-gibbons.uk/article6.html</a>), I described one of the major use cases for MapReduce: building search indexes. Another major use case is to build a machine learning system, like a classifier or recommendation system. Here, the output is not a search index but some kind of database, like a key-value store.</p>
+        
+        <p>For example, we could use MapReduce to build a spam filter for emails. Our input email data could look like this:</p>
+        <pre>
+Email_id,subject,body
+email_001,"Congratulations! You've won a prize","Click here to claim your prize."
+email_002,"Meeting tomorrow","Please find the agenda for tomorrow's meeting attached."
+email_003,"Urgent: Update your account details","Your account has been compromised. Click here to update your details."
+        </pre>
+        
+        <p>We would then look to extract features from this data, such as the presence of keywords or the email’s length:</p>
+        <pre>
+def map_function(email):
+    features = extract_features(email["subject"], email["body"])
+    return email["email_id"], features
+        </pre>
+        
+        <p>The resulting data, ready for the reducer, might look like this:</p>
+        <pre>
+[ 
+    { "email_id": "email_001", "features": { "word_count": 7, "has_prize": true, "has_click_here": true, "subject_length": 38, "body_length": 27 } }, 
+    { "email_id": "email_002", "features": { "word_count": 9, "has_prize": false, "has_click_here": false, "subject_length": 15, "body_length": 46 } }, 
+    { "email_id": "email_003", "features": { "word_count": 11, "has_prize": false, "has_click_here": true, "subject_length": 31, "body_length": 62 } }
+]
+        </pre>
+        
+        <p>A reducer could take this data and apply a trained spam filter model:</p>
+        <pre>
+def reduce_function(email_id, features):
+    classification = spam_filter_model.predict(features)
+    return email_id, classification
+        </pre>
+        
+        <p>Leading to the following key-value store:</p>
+        <pre>
+{ 
+    "email_001": "spam", 
+    "email_002": "not_spam", 
+    "email_003": "spam" 
+}
+        </pre>
+
+        <p>We could build many other machine learning processes with MapReduce. For example, a database where you query by user ID and get back suggested friends, or a product ID and its related items.</p>
+    </div>
+</body>
+</html>
