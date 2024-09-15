@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Core Idea Behind Spark</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>The Core Idea Behind Spark</h1>
+        <p>When I first started learning about Apache Spark, I found myself overwhelmed by complex concepts like <strong>Resilient Distributed Datasets (RDDs)</strong> and <strong>Directed Acyclic Graphs (DAGs)</strong>. Many explanations dove straight into these advanced topics, which can be confusing if you're not already familiar with parallel computing or Spark's predecessor, <strong>MapReduce</strong>. I believe a better approach for beginners is to focus on the core idea behind Spark: the MapReduce model and how it enables parallel computing.</p>
+        
+        <p>In preparing for a talk this October about Spark internals, I've watched numerous presentations. What many of them miss is a clear communication of what Spark fundamentally is. My goal is to let people know that the most important idea behind Spark is the MapReduce model, which allows for parallel computation by splitting tasks into "map" and "reduce" stages. Unlike its predecessor, MapReduce, Spark abstracts these stages away, making it less obvious that Map and Reduce operations are happening under the hood. This abstraction was deliberate, but it's essential to understand that Spark still relies on the MapReduce paradigm.</p>
+        
+        <p><strong>Spark</strong>, the most popular big data processing framework, is based on MapReduce. Matei Zaharia, Spark's creator, points out that Spark is actually very similar to MapReduce. While Spark introduces many optimizations and enhancements, the fundamental idea of splitting a computational task into Map and Reduce stages remains the same.</p>
+        
+        <h2>What Is MapReduce?</h2>
+        <p>But what exactly is MapReduce? Developed by Google, MapReduce was a solution for managing the enormous computational tasks required to build their search index in a cost-effective way. However, the concept of MapReduce is more general than just computing; it's an approach to breaking down a task so that it can be performed by many agents simultaneously—a method that's been known and used for thousands of years.</p>
+        
+        <h2>Historical Examples of MapReduce</h2>
+        <p>For example, conducting a national census has been performed in a MapReduce style for millennia. A large population is divided geographically, and field agents (analogous to "mappers") collect population data for their specific areas. Once data collection is complete, the information is brought to a central location, where it's combined and analyzed—a "reduce" step.</p>
+        
+        <p>Another example is the manual indexing of books before the advent of computers. A team of people would each be assigned a section of the book to read and extract important words along with their page numbers. After everyone finished their part (the "map" phase), their results would be combined to form the final index (the "reduce" phase).</p>
+        
+        <h2>The Core Idea Behind Parallel Computing</h2>
+        <p>The key point is that the core idea behind Spark—and parallel computing in general—is this method of splitting a computational job into Map and Reduce stages to enable parallel execution. Understanding this foundational concept makes it easier to grasp the more advanced features and optimizations that Spark offers.</p>
+    </div>
+</body>
+</html>
